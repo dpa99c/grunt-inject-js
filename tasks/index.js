@@ -1,13 +1,14 @@
 
 module.exports = function(grunt) {
   'use strict';
-  grunt.registerMultiTask('inject_js', 'Grunt Task that allows for multiple js files to injected into a file', function() {
+  grunt.registerMultiTask('inject_js', 'Grunt Task that allows for multiple js files to be injected into a file', function() {
 
     var scriptsrc = grunt.file.expand(this.data.scriptsrc);
     var scriptArray = [];
 
     if (scriptsrc) {
       scriptsrc.forEach(function (path) {
+        grunt.log.writeln('Path:' + path);
           createFileContent(path);
       });
     } else {
@@ -15,12 +16,12 @@ module.exports = function(grunt) {
       return;
     }
 
-    this.file.forEach(function(file)
+    this.files.forEach(function(file)
     {
       var src = grunt.file.read(file.src);
       scriptArray.forEach(function(item)
       {
-          var placeholder  = '<!--inject:' + item.identifier + '-->'
+          var placeholder  = '<!--inject:' + item.identifier + '-->';
           grunt.file.write(file.dest,src.replace(placeholder,'<script type="text/javascript">' + item.filecontent + '</script>'));
           grunt.log.ok('Dev script '+ item.identifier + '.js injected'.blue + ' into ' + file.dest);
 
@@ -32,10 +33,11 @@ module.exports = function(grunt) {
     {
       if(path.indexOf('.js')) {
         var filename = path.split('/').pop();
-        grunt.log.write('Filename:' + filename);
+        grunt.log.writeln('Filename:' + filename);
         var identifier = filename.replace('.js', '').toLowerCase();
-        grunt.log.write('Identifier:' + identifier);
-        var filecontent = grunt.file.read(script);
+        grunt.log.writeln('Identifier:' + identifier);
+        var filecontent = grunt.file.read(path);
+        grunt.log.writeln('FileContent:' + filecontent);
         var scriptItem = {
           identifier : identifier,
           filecontent : filecontent
