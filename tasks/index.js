@@ -1,50 +1,47 @@
-/*
- * grunt-inject-js
- * https://github.com/MarkAPhillips/grunt-inject-js
- *
- * Copyright (c) 2015 Mark Phillips
- * Licensed under the MIT license.
- */
-
-'use strict';
 
 module.exports = function(grunt) {
-
-  // Please see the Grunt documentation for more information regarding task
-  // creation: http://gruntjs.com/creating-tasks
-
+  'use strict';
   grunt.registerMultiTask('inject_js', 'Grunt Task that allows for multiple js files to injected into a file', function() {
-    // Merge task-specific and/or target-specific options with these defaults.
-    var options = this.options({
-      punctuation: '.',
-      separator: ', '
+
+    var scriptsrc = grunt.file.expand(this.data.scriptsrc);
+    var scriptArray = [];
+
+    if (scriptsrc) {
+      scriptsrc.forEach(function (path) {
+          createFileContent(path);
+      });
+    } else {
+      grunt.log.error('Please enter a location of the Javascript files to be injected into the Html document');
+      return;
+    }
+
+    this.file.forEach(function(file)
+    {
+      var src = grunt.file.read(file.src);
+      scriptArray.forEach(function(item)
+      {
+          var placeholder  = '<!--inject:' + item.identifier + '-->'
+          grunt.file.write(file.dest,src.replace(placeholder,'<script type="text/javascript">' + item.filecontent + '</script>'));
+          grunt.log.ok('Dev script '+ item.identifier + '.js injected'.blue + ' into ' + file.dest);
+
+      });
     });
 
-    // Iterate over all specified file groups.
-    this.files.forEach(function(f) {
-      // Concat specified files.
-      var src = f.src.filter(function(filepath) {
-        // Warn on and remove invalid source files (if nonull was set).
-        if (!grunt.file.exists(filepath)) {
-          grunt.log.warn('Source file "' + filepath + '" not found.');
-          return false;
-        } else {
-          return true;
-        }
-      }).map(function(filepath) {
-        // Read file source.
-        return grunt.file.read(filepath);
-      }).join(grunt.util.normalizelf(options.separator));
-
-      // Handle options.
-      src += options.punctuation;
-
-      // Write the destination file.
-      grunt.file.write(f.dest, src);
-
-      // Print a success message.
-      grunt.log.writeln('File "' + f.dest + '" created.');
-    });
+    // Create file content
+    function createFileContent(path)
+    {
+      if(path.indexOf('.js')) {
+        var filename = path.split('/').pop();
+        grunt.log.write('Filename:' + filename);
+        var identifier = filename.replace('.js', '').toLowerCase();
+        grunt.log.write('Identifier:' + identifier);
+        var filecontent = grunt.file.read(script);
+        var scriptItem = {
+          identifier : identifier,
+          filecontent : filecontent
+        };
+        scriptArray.push(scriptItem);
+      }
+    }
   });
-
 };
