@@ -1,6 +1,6 @@
 # grunt-inject-js v.0.1.0
 
-> Grunt Task that allows for multiple js files to injected into a file
+> Grunt task that allows for multiple js files to injected into a file. Inspired by
 
 ## Getting Started
 This plugin requires Grunt `~0.4.5`
@@ -17,7 +17,7 @@ Once the plugin has been installed, it may be enabled inside your Gruntfile with
 grunt.loadNpmTasks('grunt-inject-js');
 ```
 
-## The Inject_js task
+## The inject_js task
 
 ### Overview
 _Run this task with the `grunt inject_js` command._
@@ -46,9 +46,11 @@ grunt.initConfig({
 
 #### scriptsrc
 Type: `String` || `Array` || [file glob](http://gruntjs.com/configuring-tasks#globbing-patterns)
-Default value: `',  '`
 
 The path of the script(s) to be injected into the page.
+
+It is recommended to have a directory that includes all the JavaScript files to be injected.
+A warning is raised if the directory contains non-JavaScript files.
 
 #### files
 Type: [`Grunt file configuration`](http://gruntjs.com/configuring-tasks#files)
@@ -80,6 +82,8 @@ The follow configuration would inject three files into the html document at the 
 </body>
 </html>
 ```
+
+
 
 ## Release History
  * 2015-01-12   v0.1.0   Beta Version

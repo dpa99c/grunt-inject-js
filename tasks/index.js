@@ -6,7 +6,7 @@
 
 module.exports = function(grunt) {
   'use strict';
-  grunt.registerMultiTask('inject_js', 'Grunt Task that allows for multiple js files to be injected into a file.', function() {
+  grunt.registerMultiTask('inject_js', 'Grunt Task that allows for multiple JavaScript files to be injected into a file.', function() {
 
     var scriptsrc = grunt.file.expand(this.data.scriptsrc);
     var scriptArray = [];
@@ -16,7 +16,7 @@ module.exports = function(grunt) {
           createFileContent(path);
       });
     } else {
-      grunt.log.error('Please enter a location of the Javascript files to be injected into the Html document');
+      grunt.log.error('Please enter a location of the JavaScript files to be injected into the Html document');
       return;
     }
 
@@ -30,18 +30,19 @@ module.exports = function(grunt) {
       {
           var placeholder  = '<!-- inject:' + item.identifier + ' -->';
           replaceContent = replaceContent.replace(placeholder,'<script type="text/javascript">' + item.filecontent + '</script>');
-          var fileText = item.identifier + '.js injected';
-          grunt.log.ok('Dev script '+ fileText.blue + ' into ' + file.dest);
+          var fileText = item.identifier + '.js';
+        grunt.log.ok('Dev script '+ fileText.blue + ' injected into ' + file.dest);
       });
       grunt.file.write(dest,replaceContent);
       grunt.log.ok('Successfully updated file  '+ file.dest.blue);
     });
 
-    // Create file content.
+    // Create file content based on the file path passed.
     function createFileContent(path)
     {
-      if(path.indexOf('.js')) {
-        var filename = path.split('/').pop();
+      var filename = path.split('/').pop();
+
+      if(path.indexOf('.js')){
         var identifier = filename.replace('.js', '').toLowerCase();
         var filecontent = grunt.file.read(path);
         var scriptItem = {
@@ -49,6 +50,11 @@ module.exports = function(grunt) {
           filecontent : filecontent
         };
         scriptArray.push(scriptItem);
+      }
+      else
+      {
+        var warningText="Warning".yellow + " scriptsrc contains a non-javascript file: " + filename;
+        grunt.log.writeln(warningText);
       }
     }
   });
