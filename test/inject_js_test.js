@@ -28,21 +28,11 @@ exports.inject_js = {
     done();
   },
   default_options: function(test) {
+
     test.expect(1);
-
-    var actual = grunt.file.read('tmp/default_options');
-    var expected = grunt.file.read('test/expected/default_options');
-    test.equal(actual, expected, 'should describe what the default behavior is.');
-
-    test.done();
-  },
-  custom_options: function(test) {
-    test.expect(1);
-
-    var actual = grunt.file.read('tmp/custom_options');
-    var expected = grunt.file.read('test/expected/custom_options');
-    test.equal(actual, expected, 'should describe what the custom option(s) behavior is.');
-
+    var actual = grunt.file.read('test/output/index.html');
+    var expected = grunt.file.read('test/expected/index.html');
+    test.equal(actual, expected, 'Then should output the correct file into the HTML document.');
     test.done();
   }
 };
