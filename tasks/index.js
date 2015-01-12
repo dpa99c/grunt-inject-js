@@ -1,14 +1,18 @@
+/*
+* grunt-inject-js
+* Copyright (c) 2015 Mark Phillips
+* Licensed under the MIT License
+ */
 
 module.exports = function(grunt) {
   'use strict';
-  grunt.registerMultiTask('inject_js', 'Grunt Task that allows for multiple js files to be injected into a file', function() {
+  grunt.registerMultiTask('inject_js', 'Grunt Task that allows for multiple js files to be injected into a file.', function() {
 
     var scriptsrc = grunt.file.expand(this.data.scriptsrc);
     var scriptArray = [];
 
     if (scriptsrc) {
       scriptsrc.forEach(function (path) {
-        grunt.log.writeln('Path:' + path);
           createFileContent(path);
       });
     } else {
@@ -19,25 +23,27 @@ module.exports = function(grunt) {
     this.files.forEach(function(file)
     {
       var src = grunt.file.read(file.src);
+      var replaceContent = src;
+      var dest = file.dest;
+
       scriptArray.forEach(function(item)
       {
-          var placeholder  = '<!--inject:' + item.identifier + '-->';
-          grunt.file.write(file.dest,src.replace(placeholder,'<script type="text/javascript">' + item.filecontent + '</script>'));
-          grunt.log.ok('Dev script '+ item.identifier + '.js injected'.blue + ' into ' + file.dest);
-
+          var placeholder  = '<!-- inject:' + item.identifier + ' -->';
+          replaceContent = replaceContent.replace(placeholder,'<script type="text/javascript">' + item.filecontent + '</script>');
+          var fileText = item.identifier + '.js injected';
+          grunt.log.ok('Dev script '+ fileText.blue + ' into ' + file.dest);
       });
+      grunt.file.write(dest,replaceContent);
+      grunt.log.ok('Successfully updated file  '+ file.dest.blue);
     });
 
-    // Create file content
+    // Create file content.
     function createFileContent(path)
     {
       if(path.indexOf('.js')) {
         var filename = path.split('/').pop();
-        grunt.log.writeln('Filename:' + filename);
         var identifier = filename.replace('.js', '').toLowerCase();
-        grunt.log.writeln('Identifier:' + identifier);
         var filecontent = grunt.file.read(path);
-        grunt.log.writeln('FileContent:' + filecontent);
         var scriptItem = {
           identifier : identifier,
           filecontent : filecontent

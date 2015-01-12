@@ -1,4 +1,4 @@
-# grunt-inject-js
+# grunt-inject-js v.0.1.0
 
 > Grunt Task that allows for multiple js files to injected into a file
 
@@ -17,31 +17,38 @@ Once the plugin has been installed, it may be enabled inside your Gruntfile with
 grunt.loadNpmTasks('grunt-inject-js');
 ```
 
-## The "inject_js" task
+## The Inject_js task
 
 ### Overview
-In your project's Gruntfile, add a section named `inject_js` to the data object passed into `grunt.initConfig()`.
+_Run this task with the `grunt inject_js` command._
+
+Task targets, files and options may be specified according to the Grunt [Configuring tasks](http://gruntjs.com/configuring-tasks) guide.
+
+The task is to allow for the injection of multiple javascript scripts into a document at defined places in the document. The use case arose when having to inject different third party
+analytics code at different locations.
+
 
 ```js
 grunt.initConfig({
-  inject_js: {
-    options: {
-      // Task-specific options go here.
-    },
-    your_target: {
-      // Target-specific file lists and/or options go here.
-    },
-  },
+   inject_js: {
+       dev:
+        {
+          files:{
+            'test/output/index.html': 'test/fixtures/index.html'
+          },
+          scriptsrc: 'test/fixtures/*.js'
+        }
+      },
 });
 ```
 
-### Options
+### Required properties
 
-#### options.separator
-Type: `String`
+#### scriptsrc
+Type: `String` || `Array` || [file glob](http://gruntjs.com/configuring-tasks#globbing-patterns)
 Default value: `',  '`
 
-A string value that is used to do something with whatever.
+The path of the script(s) to be injected into the page.
 
 #### options.punctuation
 Type: `String`
@@ -52,38 +59,9 @@ A string value that is used to do something else with whatever else.
 ### Usage Examples
 
 #### Default Options
-In this example, the default options are used to do something with whatever. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result would be `Testing, 1 2 3.`
 
-```js
-grunt.initConfig({
-  inject_js: {
-    options: {},
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-});
-```
 
-#### Custom Options
-In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
 
-```js
-grunt.initConfig({
-  inject_js: {
-    options: {
-      separator: ': ',
-      punctuation: ' !!!',
-    },
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-});
-```
-
-## Contributing
-In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
-_(Nothing yet)_
+ * 2015-01-12   v0.1.0   Beta Version
