@@ -50,18 +50,36 @@ Default value: `',  '`
 
 The path of the script(s) to be injected into the page.
 
-#### options.punctuation
-Type: `String`
-Default value: `'.'`
+#### files
+Type: [`Grunt file configuration`](http://gruntjs.com/configuring-tasks#files)
 
-A string value that is used to do something else with whatever else.
+The `src` HTML files must have the following comment(s) which are replaced by the injected JavaScript:
 
-### Usage Examples
+```html
+<!-- inject:[jsfile] -->
+```
 
-#### Default Options
+where ```[jsfile]``` is the JavaScript file name to be injected. The file extension .js should be ommitted.
 
-
-
+The follow configuration would inject three files into the html document at the specified locations:
+```html
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Grunt Inject JS Test file</title>
+    <!-- inject:google -->
+    <!-- inject:woopra -->
+</head>
+<body>
+<h1>Test File</h1>
+<p>
+    Content of test file
+</p>
+<!-- inject:pardot -->
+</body>
+</html>
+```
 
 ## Release History
  * 2015-01-12   v0.1.0   Beta Version
