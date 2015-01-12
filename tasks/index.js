@@ -6,7 +6,7 @@
 
 module.exports = function(grunt) {
   'use strict';
-  grunt.registerMultiTask('inject_js', 'Grunt Task that allows for multiple JavaScript files to be injected into a file.', function() {
+  grunt.registerMultiTask('injectjs', 'Grunt Task that allows for multiple JavaScript files to be injected into a file.', function() {
 
     var scriptsrc = grunt.file.expand(this.data.scriptsrc);
     var scriptArray = [];
@@ -22,8 +22,7 @@ module.exports = function(grunt) {
 
     this.files.forEach(function(file)
     {
-      var src = grunt.file.read(file.src);
-      var replaceContent = src;
+      var replaceContent = grunt.file.read(file.src);
       var dest = file.dest;
 
       scriptArray.forEach(function(item)

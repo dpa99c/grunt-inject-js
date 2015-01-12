@@ -18,9 +18,9 @@ grunt.loadNpmTasks('grunt-inject-js');
 ```
 
 ## The inject_js task
-
+\s
 ### Overview
-_Run this task with the `grunt inject_js` command._
+_Run this task with the `grunt injectjs` command._
 
 Task targets, files and options may be specified according to the Grunt [Configuring tasks](http://gruntjs.com/configuring-tasks) guide.
 
@@ -30,7 +30,7 @@ analytics code at different locations.
 
 ```js
 grunt.initConfig({
-   inject_js: {
+   injectjs: {
        dev:
         {
           files:{
@@ -38,7 +38,7 @@ grunt.initConfig({
           },
           scriptsrc: 'test/fixtures/*.js'
         }
-      },
+      }
 });
 ```
 
@@ -86,4 +86,6 @@ The follow configuration would inject three files into the html document at the 
 
 
 ## Release History
- * 2015-01-12   v0.1.0   Beta Version
+  * 2015-01-12   v0.1.1   Beta Version - Minor update
+  Renamed task name from inject_js to injectjs and associated code changes
+  * 2015-01-12   v0.1.0   Beta Version
