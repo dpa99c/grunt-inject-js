@@ -41,7 +41,7 @@ module.exports = function(grunt) {
 
     // Unit tests.
     nodeunit: {
-      tests: ['test/*-specs.js']
+      tests: ['test/*-tests.js']
     }
 
   });
