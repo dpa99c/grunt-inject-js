@@ -1,6 +1,6 @@
 # grunt-inject-js v.0.1.0
 
-> Grunt task that allows for multiple js files to injected into a file. Inspired by
+> Grunt task that allows for multiple js files to injected into a file. Inspired by [grunt-inject](https://github.com/ChrisWren/grunt-inject)
 
 ## Getting Started
 This plugin requires Grunt `~0.4.5`
