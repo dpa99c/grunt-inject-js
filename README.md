@@ -17,8 +17,8 @@ Once the plugin has been installed, it may be enabled inside your Gruntfile with
 grunt.loadNpmTasks('grunt-inject-js');
 ```
 
-## The inject_js task
-\s
+## The injectjs task
+
 ### Overview
 _Run this task with the `grunt injectjs` command._
 
