@@ -61,7 +61,7 @@ The `src` HTML files must have the following comment(s) which are replaced by th
 <!-- inject:[jsfile] -->
 ```
 
-where ```[jsfile]``` is the JavaScript file name to be injected. The file extension .js should be ommitted.
+where ```[jsfile]``` is the JavaScript file name to be injected. The file extension .js should be omitted.
 
 The follow configuration would inject three files into the html document at the specified locations:
 ```html
