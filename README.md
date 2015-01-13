@@ -87,7 +87,7 @@ The follow configuration would inject three files into the html document at the 
 
 ## Release History
   * 2015-01-13   v0.1.3   Beta Version - Minor update
-<p>ICode refactor and improved user notifications</p>
+<p>Code refactor and improved user notifications</p>
 
   * 2015-01-13   v0.1.2   Beta Version - Minor update
 <p>Improved error handling when no files exist.</p>
