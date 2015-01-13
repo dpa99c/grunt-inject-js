@@ -1,4 +1,4 @@
-# grunt-inject-js v.0.1.1 Beta
+# grunt-inject-js v.0.1.2 Beta
 
 > Grunt task that allows for multiple js files to injected into a file. Inspired by [grunt-inject](https://github.com/ChrisWren/grunt-inject)
 
@@ -86,6 +86,10 @@ The follow configuration would inject three files into the html document at the 
 
 
 ## Release History
+  * 2015-01-12   v0.1.2   Beta Version - Minor update
+<p>Improved error handling when no files exist.</p>
+
   * 2015-01-12   v0.1.1   Beta Version - Minor update
-  Renamed task name from inject_js to injectjs and associated code changes
+<p>Renamed task name from inject_js to injectjs and associated code changes.</p>
+
   * 2015-01-12   v0.1.0   Beta Version

@@ -35,7 +35,7 @@ module.exports = function(grunt) {
         files:{
           'test/output/index.html': 'test/fixtures/index.html'
         },
-        scriptsrc: 'test/fixtures/*.js'
+        scriptsrc: 'test/fixtures/js/*.js'
       }
     },
 

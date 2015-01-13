@@ -13,33 +13,43 @@ module.exports = function(grunt) {
 
     if (scriptsrc) {
       scriptsrc.forEach(function (path) {
-          createFileContent(path);
+        createFileContent(path);
       });
     } else {
       grunt.log.error('Please enter a location of the JavaScript files to be injected into the Html document');
       return;
     }
 
-    this.files.forEach(function(file)
+    if(scriptArray.length==0)
     {
-      var replaceContent = grunt.file.read(file.src);
-      var dest = file.dest;
+      var warningText="Warning: No files located using glob pattern " + this.data.scriptsrc;
+      grunt.log.writeln(warningText.yellow);
+    }
+    else {
+      this.files.forEach(function (file) {
+        var replaceContent = grunt.file.read(file.src);
+        var dest = file.dest;
 
-      scriptArray.forEach(function(item)
-      {
-          var placeholder  = '<!-- inject:' + item.identifier + ' -->';
-          replaceContent = replaceContent.replace(placeholder,'<script type="text/javascript">' + item.filecontent + '</script>');
+        scriptArray.forEach(function (item) {
+          var placeholder = '<!-- inject:' + item.identifier + ' -->';
+          replaceContent = replaceContent.replace(placeholder, '<script type="text/javascript">' + item.filecontent + '</script>');
           var fileText = item.identifier + '.js';
-        grunt.log.ok('Dev script '+ fileText.blue + ' injected into ' + file.dest);
+          grunt.log.ok('Dev script ' + fileText.blue + ' injected into ' + file.dest);
+        });
+        grunt.file.write(dest, replaceContent);
+        grunt.log.ok('Successfully updated file  ' + file.dest.blue);
       });
-      grunt.file.write(dest,replaceContent);
-      grunt.log.ok('Successfully updated file  '+ file.dest.blue);
-    });
+    }
 
     // Create file content based on the file path passed.
     function createFileContent(path)
     {
       var filename = path.split('/').pop();
+
+      if(typeof(path)=='undefined')
+      {
+        return;
+      }
 
       if(path.indexOf('.js')){
         var identifier = filename.replace('.js', '').toLowerCase();
@@ -52,8 +62,8 @@ module.exports = function(grunt) {
       }
       else
       {
-        var warningText="Warning".yellow + " scriptsrc contains a non-javascript file: " + filename;
-        grunt.log.writeln(warningText);
+        var warningText="Warning scriptsrc contains a non-javascript file: " + filename;
+        grunt.log.writeln(warningText.yellow);
       }
     }
   });
