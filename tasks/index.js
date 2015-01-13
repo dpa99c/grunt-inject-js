@@ -13,6 +13,7 @@ module.exports = function(grunt) {
 
     if (scriptsrc) {
       scriptsrc.forEach(function (path) {
+        grunt.log.ok('Processing file ' + path.blue);
         createFileContent(path);
       });
     } else {
@@ -41,30 +42,29 @@ module.exports = function(grunt) {
       });
     }
 
-    // Create file content based on the file path passed.
-    function createFileContent(path)
-    {
+    /** Create file content based on the file path passed. **/
+    function createFileContent(path) {
       var filename = path.split('/').pop();
+      if (typeof path != 'undefined' && path.indexOf('.js')!=-1) {
+          createScriptItem(filename, path);
+        }
+        else {
+          var warningText = "Warning scriptsrc contains a non-javascript file: " + filename;
+          grunt.log.writeln(warningText.yellow);
+        }
 
-      if(typeof(path)=='undefined')
-      {
-        return;
-      }
-
-      if(path.indexOf('.js')){
-        var identifier = filename.replace('.js', '').toLowerCase();
-        var filecontent = grunt.file.read(path);
-        var scriptItem = {
-          identifier : identifier,
-          filecontent : filecontent
-        };
-        scriptArray.push(scriptItem);
-      }
-      else
-      {
-        var warningText="Warning scriptsrc contains a non-javascript file: " + filename;
-        grunt.log.writeln(warningText.yellow);
-      }
     }
+
+    /** Read file and create script item and push to array **/
+    function createScriptItem(filename, path) {
+      var identifier = filename.replace('.js', '').toLowerCase();
+      var filecontent = grunt.file.read(path);
+      var scriptItem = {
+        identifier: identifier,
+        filecontent: filecontent
+      };
+      scriptArray.push(scriptItem);
+    }
+
   });
 };
