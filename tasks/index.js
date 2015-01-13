@@ -35,7 +35,7 @@ module.exports = function(grunt) {
           var placeholder = '<!-- inject:' + item.identifier + ' -->';
           replaceContent = replaceContent.replace(placeholder, '<script type="text/javascript">' + item.filecontent + '</script>');
           var fileText = item.identifier + '.js';
-          grunt.log.ok('Dev script ' + fileText.blue + ' injected into ' + file.dest);
+          grunt.log.ok('JS script ' + fileText.blue + ' injected into ' + file.dest);
         });
         grunt.file.write(dest, replaceContent);
         grunt.log.ok('Successfully updated file  ' + file.dest.blue);
