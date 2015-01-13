@@ -86,7 +86,7 @@ The follow configuration would inject three files into the html document at the 
 
 
 ## Release History
-  * 2015-01-12   v0.1.2   Beta Version - Minor update
+  * 2015-01-13   v0.1.2   Beta Version - Minor update
 <p>Improved error handling when no files exist.</p>
 
   * 2015-01-12   v0.1.1   Beta Version - Minor update
