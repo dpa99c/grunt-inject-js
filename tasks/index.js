@@ -3,9 +3,10 @@
 * Copyright (c) 2015 Mark Phillips
 * Licensed under the MIT License
  */
+'use strict';
 
 module.exports = function(grunt) {
-  'use strict';
+
   grunt.registerMultiTask('injectjs', 'Grunt Task that allows for multiple JavaScript files to be injected into a file.', function() {
 
     var scriptsrc = grunt.file.expand(this.data.scriptsrc);
@@ -13,7 +14,7 @@ module.exports = function(grunt) {
 
     if (scriptsrc) {
       scriptsrc.forEach(function (path) {
-        grunt.log.ok('Processing file ' + path.blue);
+        grunt.verbose.writeln('Processing file ' + path);
         createFileContent(path);
       });
     } else {
@@ -24,7 +25,7 @@ module.exports = function(grunt) {
     if(scriptArray.length==0)
     {
       var warningText="Warning: No files located using glob pattern " + this.data.scriptsrc;
-      grunt.log.writeln(warningText.yellow);
+      grunt.log.warn(warningText);
     }
     else {
       this.files.forEach(function (file) {
@@ -35,7 +36,7 @@ module.exports = function(grunt) {
           var placeholder = '<!-- inject:' + item.identifier + ' -->';
           replaceContent = replaceContent.replace(placeholder, '<script type="text/javascript">' + item.filecontent + '</script>');
           var fileText = item.identifier + '.js';
-          grunt.log.ok('JS script ' + fileText.blue + ' injected into ' + file.dest);
+          grunt.verbose.writeln('JS script ' + fileText + ' injected into ' + file.dest);
         });
         grunt.file.write(dest, replaceContent);
         grunt.log.ok('Successfully updated file  ' + file.dest.blue);
@@ -49,8 +50,7 @@ module.exports = function(grunt) {
           createScriptItem(filename, path);
         }
         else {
-          var warningText = "Warning scriptsrc contains a non-javascript file: " + filename;
-          grunt.log.writeln(warningText.yellow);
+          grunt.verbose.warn("Warning scriptsrc contains a non-javascript file: " + filename);
         }
 
     }
@@ -65,6 +65,5 @@ module.exports = function(grunt) {
       };
       scriptArray.push(scriptItem);
     }
-
   });
 };
