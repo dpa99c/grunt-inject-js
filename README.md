@@ -1,4 +1,4 @@
-# grunt-inject-js v.0.1.7 Beta
+# grunt-inject-js v.0.1.8 Beta
 
 > Grunt task that allows for multiple js files to be injected into a file. Inspired by [grunt-inject](https://github.com/ChrisWren/grunt-inject)
 
@@ -44,14 +44,6 @@ grunt.initConfig({
 
 ### Required properties
 
-#### scriptsrc
-Type: `String` || `Array` || [file glob](http://gruntjs.com/configuring-tasks#globbing-patterns)
-
-The path of the script(s) to be injected into the page.
-
-It is recommended to have a directory that includes all the JavaScript files to be injected.
-A warning is raised if the directory contains non-JavaScript files.
-
 #### files
 Type: [`Grunt file configuration`](http://gruntjs.com/configuring-tasks#files)
 
@@ -82,10 +74,23 @@ The follow configuration would inject three files into the html document at the 
 </body>
 </html>
 ```
+
+### Optional properties
+
+#### scriptsrc
+Type: `String` || `Array` || [file glob](http://gruntjs.com/configuring-tasks#globbing-patterns)
+
+The path of the script(s) to be injected into the page.
+
+It is recommended to have a directory that includes all the JavaScript files to be injected.
+A warning is raised if the directory contains non-JavaScript files.
+
+This property is ignored if `clear` is set to true.
+
 #### clear
 Type: `Boolean`
 
-If this property is set to `true` then the scriptsrc is ignored and all tags following the pattern
+If this property is set to `true` then the `scriptsrc` is ignored and all tags following the pattern
 
 `<!-- inject:[A-Za-z]* -->` are removed from the file.
 
@@ -93,25 +98,28 @@ This property was added as in some environments no Javascript files need to be i
 
 ## Release History
 
-    * 2015-01-16   v0.1.7   Beta Version - Minor update
+    * 2015-01-16   v0.1.8   Beta Version
+<p>Update  Readme text.</p>
+
+    * 2015-01-16   v0.1.7   Beta Version
 <p>Add clear option to task and update tests and Readme text.</p>
 
-    * 2015-01-14   v0.1.6   Beta Version - Minor update
+    * 2015-01-14   v0.1.6   Beta Version
 <p>Use grunt standardised verbose messaging.</p>
 
-    * 2015-01-13   v0.1.5   Beta Version - Minor update
+    * 2015-01-13   v0.1.5   Beta Version
 <p>Final updates for Readme text.</p>
 
-    * 2015-01-13   v0.1.4   Beta Version - Minor update
+    * 2015-01-13   v0.1.4   Beta Version
 <p>Update Readme text and changed notifications.</p>
 
-    * 2015-01-13   v0.1.3   Beta Version - Minor update
+    * 2015-01-13   v0.1.3   Beta Version
 <p>Code refactor and improved user notifications.</p>
 
-    * 2015-01-13   v0.1.2   Beta Version - Minor update
+    * 2015-01-13   v0.1.2   Beta Version
 <p>Improved error handling when no files exist.</p>
 
-    * 2015-01-12   v0.1.1   Beta Version - Minor update
+    * 2015-01-12   v0.1.1   Beta Version
 <p>Renamed task name from inject_js to injectjs and associated code changes.</p>
 
     * 2015-01-12   v0.1.0   Beta Version
