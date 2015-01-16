@@ -1,4 +1,4 @@
-# grunt-inject-js v.0.1.6 Beta
+# grunt-inject-js v.0.1.7 Beta
 
 > Grunt task that allows for multiple js files to be injected into a file. Inspired by [grunt-inject](https://github.com/ChrisWren/grunt-inject)
 
@@ -82,12 +82,22 @@ The follow configuration would inject three files into the html document at the 
 </body>
 </html>
 ```
+#### clear
+Type: `Boolean`
 
+If this property is set to `true` then the scriptsrc is ignored and all tags following the pattern
+
+`<!-- inject:[A-Za-z]* -->` are removed from the file.
+
+This property was added as in some environments no Javascript files need to be injected and all inject placeholders removed from the file(s).
 
 ## Release History
 
+    * 2015-01-16   v0.1.7   Beta Version - Minor update
+<p>Add clear option to task and update tests and Readme text.</p>
+
     * 2015-01-14   v0.1.6   Beta Version - Minor update
-<p>Use grunt standardised verbose messaging</p>
+<p>Use grunt standardised verbose messaging.</p>
 
     * 2015-01-13   v0.1.5   Beta Version - Minor update
 <p>Final updates for Readme text.</p>
@@ -105,3 +115,4 @@ The follow configuration would inject three files into the html document at the 
 <p>Renamed task name from inject_js to injectjs and associated code changes.</p>
 
     * 2015-01-12   v0.1.0   Beta Version
+<p>Initial release.</p>
