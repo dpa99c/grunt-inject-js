@@ -96,6 +96,23 @@ If this property is set to `true` then the `scriptsrc` is ignored and all tags f
 
 This property was added as in some environments no Javascript files need to be injected and all inject placeholders removed from the file(s).
 
+#### omitScriptTags
+Type: `Boolean`
+
+If this property is set to `true` then the injected content from the source JS files is not automatically wrapped with `<script>` tags.
+This enables this plugin to be used to inject the contents of JS files into other JS files.
+
+Defaults to `false`.
+
+#### preserveCase
+Type: `Boolean`
+
+If this property is set to `true` then the case of source files is preserved when referencing from placeholders. For example, `Foo.js` is the referenced as  `<!-- inject:Foo -->`.
+
+If `false`, then all filenames are automatically converted to lower case. For example, `Foo.js` is the referenced as  `<!-- inject:foo -->`.
+
+Defaults to `false`.
+
 ## Release History
 
     * 2015-01-16   v0.1.8   Beta Version

@@ -9,7 +9,9 @@ module.exports = function(grunt) {
 
   grunt.registerMultiTask('injectjs', 'Grunt Task that allows for multiple JavaScript files to be injected into a file.', function() {
 
-    var clearTags = this.data.clear;
+    var _this = this,
+    clearTags = this.data.clear;
+
     if(clearTags)
     {
       this.files.forEach(function (file) {
@@ -43,8 +45,9 @@ module.exports = function(grunt) {
           var dest = file.dest;
 
           scriptArray.forEach(function (item) {
-            var placeholder = '<!-- inject:' + item.identifier + ' -->';
-            replaceContent = replaceContent.replace(placeholder, '<script type="text/javascript">' + item.filecontent + '</script>');
+            var placeholder = '<!-- inject:' + item.identifier + ' -->',
+                replacement = _this.data.omitScriptTags ? item.filecontent : '<script type="text/javascript">' + item.filecontent + '</script>';
+            replaceContent = replaceContent.replace(placeholder, replacement);
             var fileText = item.identifier + '.js';
             grunt.verbose.writeln('JS script ' + fileText + ' injected into ' + file.dest);
           });
@@ -68,7 +71,8 @@ module.exports = function(grunt) {
 
     /** Read file and create script item and push to array **/
     function createScriptItem(filename, path) {
-      var identifier = filename.replace('.js', '').toLowerCase();
+      var identifier = filename.replace('.js', '');
+      if(!_this.data.preserveCase) identifier = identifier.toLowerCase();
       var filecontent = grunt.file.read(path);
       var scriptItem = {
         identifier: identifier,
