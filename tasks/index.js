@@ -10,15 +10,24 @@ module.exports = function(grunt) {
   grunt.registerMultiTask('injectjs', 'Grunt Task that allows for multiple JavaScript files to be injected into a file.', function() {
 
     var _this = this,
-    clearTags = this.data.clear;
+        clearTags = this.data.clear,
+        startPlaceholder = {
+          html: '<!-- inject:',
+          js: '/* inject:'
+        },
+        endPlaceholder = {
+          html: ' -->',
+          js: ' */'
+        };
 
     if(clearTags)
     {
       this.files.forEach(function (file) {
-        var dest = file.dest;
-        var replaceContent = grunt.file.read(file.src);
-        var regex = /<!-- inject:[a-zA-Z]* -->/gi;
-        var output= replaceContent.replace(regex,'');
+        var dest = file.dest,
+            destType = file.dest.match(/\.js$/) ? "js" : "html",
+            replaceContent = grunt.file.read(file.src),
+            regex = new RegExp(startPlaceholder[destType] + "[a-zA-Z]*" + endPlaceholder[destType], 'gi'),
+            output= replaceContent.replace(regex,'');
         grunt.file.write(dest, output);
         grunt.log.ok('Successfully removed all tags from file:  ' + file.dest.blue);
       });
@@ -42,11 +51,12 @@ module.exports = function(grunt) {
       else {
         this.files.forEach(function (file) {
           var replaceContent = grunt.file.read(file.src);
-          var dest = file.dest;
+          var dest = file.dest,
+              destType = file.dest.match(/\.js$/) ? "js" : "html";
 
           scriptArray.forEach(function (item) {
-            var placeholder = '<!-- inject:' + item.identifier + ' -->',
-                replacement = _this.data.omitScriptTags ? item.filecontent : '<script type="text/javascript">' + item.filecontent + '</script>';
+            var placeholder = startPlaceholder[destType] + item.identifier + endPlaceholder[destType],
+                replacement = destType === "js" ? item.filecontent : '<script type="text/javascript">' + item.filecontent + '</script>';
             replaceContent = replaceContent.replace(placeholder, replacement);
             var fileText = item.identifier + '.js';
             grunt.verbose.writeln('JS script ' + fileText + ' injected into ' + file.dest);
